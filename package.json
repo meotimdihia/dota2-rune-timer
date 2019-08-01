@@ -1,0 +1,7 @@
+{
+  "name": "dota2-rune-timer",
+  "dependencies": {
+    "fastify": "^2.7.1"
+  },
+  "bin": "index.js"
+}
