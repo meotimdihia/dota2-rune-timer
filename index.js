@@ -6,11 +6,12 @@ async function beep(loop = 2) {
 	  await new Promise(resolve => setTimeout(resolve, 500))
   }
 }
-// Declare a route
+
 
 const date = new Date()
 let alerted = date.getTime() - 30000
 let alertedBounty = date.getTime() - 30000
+
 fastify.post('/', (request, reply) => {
 	
 	if (request.body && request.body.map && request.body.map.clock_time) {
