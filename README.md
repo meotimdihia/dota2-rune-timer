@@ -1,5 +1,5 @@
 # DESCRIPTION
-Simple program that alert when time for runes is comming, the program alert system beep  
+Simple program that alert when time for runes is coming, the program'll alert system beep  
 Beep should be alert 2 times for runes on river, and 3 times for bounty runes  
 
 # INSTALLING
