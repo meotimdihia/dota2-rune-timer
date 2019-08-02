@@ -1,4 +1,5 @@
 const fastify = require('fastify')({})
+const exec = require('child_process').exec
 
 async function beep(loop = 2) {
   for (let i = 0; i < loop; i++) {
