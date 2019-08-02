@@ -24,6 +24,7 @@ exec("ping sgp-1.valve.net", (error, stdout, stderr) => {
 const date = new Date()
 let alerted = date.getTime() - 30000
 let alertedBounty = date.getTime() - 30000
+let disabled = false
 
 fastify.post('/', (request, reply) => {
   
@@ -38,31 +39,31 @@ fastify.post('/', (request, reply) => {
     const time = Number(request.body.map.clock_time)
     const date = new Date()
     
-    // alert for rune on the river
-    if (date.getTime() - alerted > 30000 && (Math.round(time / 60) % 2 == 0) && (time % 60 > 30) && (time % 60 < 45)) {
-      alerted = date.getTime()
-      console.log("Check runes on the river!")
-      beep()
-    }
-    
-    // alert for bounty runes
-    if (date.getTime() - alertedBounty > 30000 && (Math.round(time / 60) % 5 == 0) && (time % 60 > 30) && (time % 60 < 45)) {
-      alertedBounty = date.getTime()
-      console.log("Check bounty runes!")
-      beep(3)
-    }
-    
-    let minute
-    if (time > 0) {
-      minute = Math.floor(time / 60)
-    } else {
-      minute = Math.floor(time / 60) + 1
-    }
-    let gpmAndXpm = ''
-    if (request.body.player.gpm) {
-       gpmAndXpm = `, GPM: ${request.body.player.gpm}, XPM: ${request.body.player.xpm}`
-    }
-    console.log(`Time ${minute}' ${Math.floor(time % 60)}"` + gpmAndXpm)
+	
+	let gpmAndXpm = ''
+	if (request.body.player.gpm) {
+	   gpmAndXpm = ` GPM: ${request.body.player.gpm}, XPM: ${request.body.player.xpm}`
+	}
+	
+	if (time < 60 * 15) {	
+		// alert for runes on the river
+		if (date.getTime() - alerted > 30000 && (Math.round(time / 60) % 2 == 0) && (time % 60 > 30) && (time % 60 < 45)) {
+		  alerted = date.getTime()
+		  console.log("Check runes on the river!" + gpmAndXpm)
+		  beep()
+		}
+	} else if (disabled == false) {
+		disabled = true
+		console.log(`disabled alert runes on river when time is over 15 mins`)
+	}	
+	
+	// alert for bounty runes
+	if (date.getTime() - alertedBounty > 30000 && (Math.round(time / 60) % 5 == 0) && (time % 60 > 30) && (time % 60 < 45)) {
+	  alertedBounty = date.getTime()
+	  console.log("Check bounty runes!" + gpmAndXpm)
+	  beep(3)
+	}
+	
   }
 })
 
