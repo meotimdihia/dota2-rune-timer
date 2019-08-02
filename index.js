@@ -58,7 +58,11 @@ fastify.post('/', (request, reply) => {
     } else {
       minute = Math.floor(time / 60) + 1
     }
-    console.log(`Time ${minute}' ${Math.floor(time % 60)}, GPM: ${request.body.player.gpm}, XPM: ${request.body.player.xpm}`)
+    let gpmAndXpm = ''
+    if (request.body.player.gpm) {
+       gpmAndXpm = `, GPM: ${request.body.player.gpm}, XPM: ${request.body.player.xpm}`
+    }
+    console.log(`Time ${minute}' ${Math.floor(time % 60)}"` + gpmAndXpm)
   }
 })
 
